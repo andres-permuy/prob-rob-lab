@@ -684,8 +684,8 @@ Full recordings are preserved under `submission/lab2_hw3214/evidence/raw/`.
 counts, and exact inclusive sample ranges (numbered starting at 1) for the excerpts.
 Include the trimmed outputs and result in the report; retain the full recordings
 as supporting evidence. The assignment 3 screencast must still be supplied
-with the submission: [recorded door traversal](lab2_results/lab2_assignment3.mp4).
-The saved video is approximately 59 seconds long and shows the door opening,
+with the submission: [recorded door traversal](submission/lab2_hw3214/video/lab2_assignment3_trimmed.mp4).
+The saved video is 43 seconds long and shows the door opening,
 the robot passing through and stopping, and the door closing behind it.
 
 ### Submission package
@@ -694,8 +694,8 @@ The assembled package is in `submission/lab2_hw3214/`, with a ZIP at
 `submission/lab2_hw3214_submission.zip`. Start with
 [START_HERE.txt](submission/lab2_hw3214/START_HERE.txt). It contains an editable
 Word report, a five-page PDF review copy, the 43-second trimmed video, raw and
-trimmed odometry evidence, and a complete source snapshot. The original video
-remains in `lab2_results/`.
+trimmed odometry evidence, and a complete source snapshot. The trimmed submission
+video is the maintained copy.
 
 The report identifies Howard Wang (hw3214). Assignments 1–2 and the teammate's
 name/UNI are highlighted placeholders to complete before submission. The report

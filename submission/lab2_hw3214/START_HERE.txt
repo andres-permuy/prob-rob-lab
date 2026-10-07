@@ -54,11 +54,11 @@ simulation. The controller runs once per launch. Gazebo Reset does not restart
 the controller or necessarily respawn the dynamically inserted robot.
 
 VIDEO
-The original 59-second recording remains in the working repository at
-lab2_results/lab2_assignment3.mp4. The submission clip keeps seconds 14–57,
+The 43-second submission clip keeps seconds 14–57 of the original recording,
 including the closed door before opening and a pause after closing. Only idle
 head/tail footage was removed; there are no internal cuts or intentional speed
 changes. The clip was re-encoded as H.264 at the original 688 x 914 resolution.
+The trimmed clip is the maintained copy; the untrimmed video has been removed.
 
 ASSIGNMENT 5 RESULT
 Commanded 0.3 m/s -> measured 0.300 m/s.
