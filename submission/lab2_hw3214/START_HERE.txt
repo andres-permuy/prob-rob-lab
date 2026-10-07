@@ -10,8 +10,8 @@ The handout requires a report, code, screencast, and odometry output. It does no
 specify Google Docs as the required format. Follow any separate portal rules.
 
 CONTENTS
-report/lab2_report_hw3214.docx  Editable report; suitable for importing into Docs.
-report/lab2_report_hw3214.pdf   Five-page review copy with visible placeholders.
+report/lab2_report.docx  Editable report; suitable for importing into Docs.
+report/lab2_report.pdf   Five-page review copy with visible placeholders.
 video/lab2_assignment3_trimmed.mp4  43-second continuous demonstration.
 video/trim_details.json        Exact trim bounds and original recording checksum.
 evidence/trimmed/              Three steady-driving excerpts for Assignment 5.

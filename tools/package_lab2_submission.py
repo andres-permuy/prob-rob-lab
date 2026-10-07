@@ -18,8 +18,8 @@ CACHE_FOLDERS = {'__pycache__', '.pytest_cache'}
 def main():
     required = [
         BUNDLE / 'START_HERE.txt',
-        BUNDLE / 'report' / 'lab2_report_hw3214.docx',
-        BUNDLE / 'report' / 'lab2_report_hw3214.pdf',
+        BUNDLE / 'report' / 'lab2_report.docx',
+        BUNDLE / 'report' / 'lab2_report.pdf',
         BUNDLE / 'video' / 'lab2_assignment3_trimmed.mp4',
         BUNDLE / 'video' / 'trim_details.json',
         BUNDLE / 'evidence' / 'speed_summary.csv',
