@@ -1,0 +1,12 @@
+{
+  "original_file": "lab2_assignment3.mp4",
+  "original_sha256": "b3473972fda05bc5a37e92c928af6524f8383f3b3a0d8cfddf62fab83f74f3c5",
+  "requested_start_seconds": 14,
+  "requested_end_seconds": 57,
+  "first_retained_timestamp_seconds": 14.0,
+  "last_retained_timestamp_seconds": 56.96,
+  "output_frames": 1075,
+  "output_fps": 25,
+  "output_duration_seconds": 43.0,
+  "edits": "Leading and trailing idle footage removed only. No internal cuts, overlays, crop, or intentional speed changes. Re-encoded as H.264 at original resolution."
+}

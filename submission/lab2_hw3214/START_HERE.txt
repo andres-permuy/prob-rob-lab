@@ -1,0 +1,83 @@
+LAB 2 SUBMISSION PACKAGE
+Howard Wang | UNI: hw3214
+
+STATUS
+Assignments 3–5 are implemented and documented with video and recorded evidence.
+Assignments 1–2 and the teammate's name/UNI remain highlighted placeholders in
+the report. Fill them in and export a fresh PDF before submitting the report.
+No Google Doc has been created yet; that requires the Google Drive connection.
+The handout requires a report, code, screencast, and odometry output. It does not
+specify Google Docs as the required format. Follow any separate portal rules.
+
+CONTENTS
+report/lab2_report_hw3214.docx  Editable report; suitable for importing into Docs.
+report/lab2_report_hw3214.pdf   Five-page review copy with visible placeholders.
+video/lab2_assignment3_trimmed.mp4  43-second continuous demonstration.
+video/trim_details.json        Exact trim bounds and original recording checksum.
+evidence/trimmed/              Three steady-driving excerpts for Assignment 5.
+evidence/raw/                  Complete original ROS echo recordings.
+evidence/speed_summary.csv     Statistics and retained sample ranges.
+source/prob_rob_labs_ros_2/     Complete source snapshot of the course packages,
+                              including the new controller and its tests.
+MANIFEST.sha256               File checksums for this packaged version.
+
+REPORT COMPLETION
+1. Fill the teammate name/UNI and all Assignment 1–2 placeholders in the DOCX
+   or imported Google Doc. Include actual ros2 node output and the measured
+   minimum opening torque from the teammate's experiment.
+2. Remove the draft notice after completing those sections.
+3. Export an updated PDF. The PDF included here does not automatically update
+   when the DOCX or a Google Doc is edited.
+4. Submit the updated report, source code, video, and echo-output evidence in
+   the format requested by the course portal. Recreate the ZIP if files change.
+
+RUN THE CODE
+Use the source snapshot as the only copy of these ROS packages in a workspace
+with the course dependencies installed. Do not nest it in an existing course
+checkout or put two copies of the same packages under workspace/src.
+
+From the configured workspace root, build the supporting packages if this is a
+fresh workspace, then build the main Python package:
+
+  colcon build --packages-skip prob_rob_labs
+  colcon build --symlink-install --packages-select prob_rob_labs
+  source install/setup.bash
+
+Complete demonstration:
+  ros2 launch prob_rob_labs turtlebot3_and_door_launch.py run_lab2_controller:=true
+
+Different commanded speed:
+  ros2 launch prob_rob_labs turtlebot3_and_door_launch.py run_lab2_controller:=true forward_speed:=0.3
+
+For each repeat, exit the previous launch with Ctrl+C and launch a fresh
+simulation. The controller runs once per launch. Gazebo Reset does not restart
+the controller or necessarily respawn the dynamically inserted robot.
+
+VIDEO
+The original 59-second recording remains in the working repository at
+lab2_results/lab2_assignment3.mp4. The submission clip keeps seconds 14–57,
+including the closed door before opening and a pause after closing. Only idle
+head/tail footage was removed; there are no internal cuts or intentional speed
+changes. The clip was re-encoded as H.264 at the original 688 x 914 resolution.
+
+ASSIGNMENT 5 RESULT
+Commanded 0.3 m/s -> measured 0.300 m/s.
+Commanded 0.6 m/s -> measured 0.500 m/s.
+Commanded 0.8 m/s -> measured 0.500 m/s.
+Maximum observed sustained odometry velocity: 0.500 m/s in this configuration.
+The supplied forward-command cap is unchanged.
+
+The same trimming rule was used for all echo recordings: identify the longest
+continuous segment above 0.15 m/s, then retain its middle 60%. This leaves 657
+samples in each excerpt. Original numbers and separators are preserved.
+
+PACKAGING NOTE
+From the working repository root, run:
+  python3 tools/package_lab2_submission.py
+This rebuilds source/, MANIFEST.sha256, and the submission ZIP. These generated
+files are ignored by Git. Reports, video, and measurement evidence are versioned.
+The script does not convert an edited DOCX to PDF; export that updated PDF first.
+
+The working repository has submission/COLCON_IGNORE so its copied source
+snapshot cannot interfere with ordinary workspace builds. That guard is outside
+the extracted lab2_hw3214 package and is not included in the ZIP.

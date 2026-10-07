@@ -1,4 +1,23 @@
-__pycache__
+# Python and test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Generated ROS workspace output
+/build/
+/install/
+/log/
+
+# Rebuildable submission artifacts; keep reports, video, and evidence in Git
+/submission/*/source/
+/submission/*/MANIFEST.sha256
+/submission/*.zip
+/submission/*.zip.tmp
+
+# Editor and OS temporary files
 *.swp
 *~
 *.bak
+.DS_Store

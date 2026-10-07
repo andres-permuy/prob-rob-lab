@@ -26,6 +26,7 @@ The professor's setup scripts are intentionally retained so that a personal Ubun
 - [Building the Workspace](#building-the-workspace)
 - [Verify the Installation](#verify-the-installation)
 - [Basic Usage](#basic-usage)
+- [Lab 2 — Door Controller and Speed Experiment](#lab-2--door-controller-and-speed-experiment)
 - [Daily Workflow](#daily-workflow)
 - [Git Collaboration](#git-collaboration)
 - [Updating From the Professor's Repository](#updating-from-the-professors-repository)
@@ -516,6 +517,203 @@ ros2 launch prob_rob_labs turtlebot3_empty_launch.py
 This is the course-provided empty-world launch used at the beginning of Lab 1.
 
 ---
+
+## Lab 2 — Door Controller and Speed Experiment
+
+Assignments 1–2 cover the launch hierarchy, door model, bridge, and manual torque
+experiment. Assignments 3–4 are implemented by `door_controller`; assignment 5
+requires measured odometry from repeated simulation runs. The controller does not
+subscribe to odometry, camera, or door state: all motion decisions use elapsed
+simulation time.
+
+### Build after adding the controller
+
+From a terminal with the course environment loaded:
+
+```bash
+cc_build
+source "$MY_WORKSPACE/install/setup.bash"
+```
+
+The files were added directly to this checkout. The provided `tools/new_ros_node`
+assumes the checkout directory is named `prob_rob_labs_ros_2`; check that path
+before using the generator for future nodes.
+
+### Assignment 3 — Watch the complete sequence
+
+Stop any previous simulation, steering GUI, and controller before starting a fresh run:
+
+```bash
+ros2 launch prob_rob_labs turtlebot3_and_door_launch.py run_lab2_controller:=true
+```
+
+This starts the existing door world and the new controller. The optional flaky
+door opener is disabled when the Lab 2 controller is selected, so the two nodes
+cannot issue conflicting door commands. The original launch defaults still leave
+both controllers off.
+
+After the simulation clock and command subscribers are available, the controller
+waits 3 seconds, opens the door for 8 seconds, drives at 0.2 m/s for 22 seconds,
+stops for 1 second, and closes the door for 8 seconds. These are initial tuning
+values; successful physical traversal must be verified in Gazebo.
+
+Watch for all four outcomes:
+
+1. The door opens before the robot moves; the robot does not push it.
+2. The entire robot clears the doorway and the door's swing.
+3. The robot stops before closing begins.
+4. The door closes while the robot stays stopped.
+
+The terminal logs STARTUP, OPENING, DRIVING, STOPPING, CLOSING, and DONE.
+DONE means the timed commands finished, not that sensors confirmed success.
+The node keeps publishing zero velocity and zero torque afterward. Stop the launch
+with Ctrl+C, and start a fresh simulation for each repeat. Record a screencast of
+a successful complete run for the assignment 3 submission. Do not manually open
+the door during a demonstration.
+
+The velocity publisher sends `geometry_msgs/msg/TwistStamped` on `/cmd_vel` at
+20 Hz with simulation timestamps and the `base_footprint` frame. Door commands use
+`std_msgs/msg/Float64` on `/hinged_glass_door/torque`. Positive torque opens the
+door and remains applied while driving and stopping; negative torque closes it.
+
+### Assignment 4 — Change the forward speed
+
+```bash
+ros2 launch prob_rob_labs turtlebot3_and_door_launch.py run_lab2_controller:=true forward_speed:=0.3
+```
+
+The launch argument becomes a typed ROS parameter, which the node declares and
+reads with `get_parameter_value()`. Parameters are set at startup; restart the
+controller to change them. You can inspect the selected speed in another terminal:
+
+```bash
+ros2 param get /door_controller forward_speed
+```
+
+Available tuning arguments:
+
+| Argument | Default | Units / purpose |
+|---|---:|---|
+| `forward_speed` | 0.2 | Commanded forward speed, m/s; must be positive |
+| `startup_delay` | 3.0 | Seconds after command subscribers are discovered |
+| `open_duration` | 8.0 | Seconds to open the door |
+| `drive_duration` | 22.0 | Seconds to drive straight |
+| `stop_duration` | 1.0 | Seconds to stop before closing |
+| `close_duration` | 8.0 | Seconds to close the door |
+| `open_torque` | 5.0 | N m, in (0, 5] |
+| `close_torque` | -5.0 | N m, in [-5, 0) |
+
+Drive duration is independent of commanded speed. If reducing speed, increase the
+duration so the robot still clears the door. The initial target is roughly 4.4 m
+of travel from the default x=-1.5 m spawn; acceleration, slip, and speed limiting
+mean `speed × time` is only a planning estimate. Changing the spawn position also
+requires retuning. Do not reduce travel time solely from a very large commanded
+speed: the robot may be unable to achieve it.
+
+To run just the controller against an already running, reset simulation:
+
+```bash
+ros2 launch prob_rob_labs door_controller_launch.py forward_speed:=0.2
+```
+
+### Assignment 5 — Measure maximum achieved speed
+
+Keep simulation settings and the starting pose consistent. For each trial, start
+a fresh simulation and controller, changing only `forward_speed`. Suggested first
+commands are 0.2, 0.3, 0.4, 0.5, 0.6, and 0.8 m/s. Use further trials if needed
+to establish a plateau. Keep the default drive duration initially so the robot has
+time to accelerate and clear the door.
+
+For example, start a trial in terminal 1:
+
+```bash
+ros2 launch prob_rob_labs turtlebot3_and_door_launch.py run_lab2_controller:=true forward_speed:=0.6
+```
+
+While it is opening the door, start recording in terminal 2:
+
+```bash
+mkdir -p /tmp/lab2-speed-results
+ros2 topic echo /odom --field twist.twist.linear.x | tee /tmp/lab2-speed-results/speed-0.6.txt
+```
+
+Stop the echo with Ctrl+C after the robot has driven and stopped. Change the
+filename for each speed so evidence is preserved. Copy the output files into your
+submission before clearing temporary files or rebooting.
+
+Compare sustained readings during the DRIVING stage, excluding initial
+acceleration, final braking, and isolated noise spikes. Record each commanded
+speed and its achieved steady speed, then report where increasing the command
+stops increasing the measured velocity. Submit the echo output with your result.
+
+In this checkout, `cmd_vel_noise_injector` caps positive forward commands at
+0.5 m/s before forwarding them. This is a code-level limit, **not a measured
+assignment result**; odometry is still required, and dynamics can further affect
+the readings. Do not change that limit for this experiment.
+
+Submission checklist: assignment 1–2 report answers and experimental evidence;
+controller, launch, and package changes for assignments 3–4; a successful traversal
+video; and assignment 5's measured maximum velocity with saved echo output.
+
+### Assignment 5 — Recorded results
+
+The completed trials produced the following sustained odometry velocities:
+
+| Commanded speed (m/s) | Measured mean speed (m/s) | Trimmed ROS echo output |
+|---:|---:|---|
+| 0.3 | 0.300 | [0.3 trial](submission/lab2_hw3214/evidence/trimmed/speed-0.3-steady.txt) |
+| 0.6 | 0.500 | [0.6 trial](submission/lab2_hw3214/evidence/trimmed/speed-0.6-steady.txt) |
+| 0.8 | 0.500 | [0.8 trial](submission/lab2_hw3214/evidence/trimmed/speed-0.8-steady.txt) |
+
+**Report result:** In the supplied simulation configuration, the maximum observed
+sustained forward velocity was **0.500 m/s**. Raising the commanded speed from
+0.6 to 0.8 m/s did not raise the measured velocity. This plateau agrees with the
+0.5 m/s positive forward-command limit in the supplied `cmd_vel_noise_injector`.
+The measurement is the robot's odometry estimate and applies to this simulation
+configuration; it is not a measurement of a physical TurtleBot's hardware limit.
+
+For each recording, the longest continuous segment with reported speed above
+0.15 m/s was selected, then its first and last 20% were excluded to remove
+acceleration and braking. The mean of the remaining 657 samples is reported
+above. The trimmed files preserve the original echo values and separators without
+rounding, smoothing, or resampling. Because the echo command recorded only the
+velocity field, the files do not contain timestamps.
+
+Full recordings are preserved under `submission/lab2_hw3214/evidence/raw/`.
+[The CSV summary](submission/lab2_hw3214/evidence/speed_summary.csv) records the statistics, sample
+counts, and exact inclusive sample ranges (numbered starting at 1) for the excerpts.
+Include the trimmed outputs and result in the report; retain the full recordings
+as supporting evidence. The assignment 3 screencast must still be supplied
+with the submission: [recorded door traversal](lab2_results/lab2_assignment3.mp4).
+The saved video is approximately 59 seconds long and shows the door opening,
+the robot passing through and stopping, and the door closing behind it.
+
+### Submission package
+
+The assembled package is in `submission/lab2_hw3214/`, with a ZIP at
+`submission/lab2_hw3214_submission.zip`. Start with
+[START_HERE.txt](submission/lab2_hw3214/START_HERE.txt). It contains an editable
+Word report, a five-page PDF review copy, the 43-second trimmed video, raw and
+trimmed odometry evidence, and a complete source snapshot. The original video
+remains in `lab2_results/`.
+
+The report identifies Howard Wang (hw3214). Assignments 1–2 and the teammate's
+name/UNI are highlighted placeholders to complete before submission. The report
+does not claim those sections are finished. Google Docs creation requires the
+Google Drive connection; an editable DOCX is provided in the meantime.
+
+After cloning or editing the report or code, rebuild the submission package with:
+
+```bash
+python3 tools/package_lab2_submission.py
+```
+
+The source snapshot, checksum manifest, and ZIP are generated locally and ignored
+by Git. The editable report, PDF, video, and original measurement evidence are
+versioned. Only one canonical copy of each odometry recording is kept.
+
+`submission/COLCON_IGNORE` prevents the packaged source copy from being discovered
+as duplicate ROS packages during ordinary workspace builds.
 
 ## Daily Workflow
 

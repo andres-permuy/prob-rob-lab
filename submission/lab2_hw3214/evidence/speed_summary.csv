@@ -1,0 +1,4 @@
+commanded_speed_m_s,steady_mean_m_s,steady_median_m_s,total_samples,steady_samples,first_sample_1_based,last_sample_1_based,method,raw_output,trimmed_output
+0.3,0.3000000000000059,0.3000000000000169,2822,657,779,1435,middle 60 percent of longest contiguous run above 0.15 m/s; original values unchanged,raw/speed-0.3.txt,trimmed/speed-0.3-steady.txt
+0.6,0.5000000000000098,0.5000000000000115,2060,657,779,1435,middle 60 percent of longest contiguous run above 0.15 m/s; original values unchanged,raw/speed-0.6.txt,trimmed/speed-0.6-steady.txt
+0.8,0.5000000000000098,0.5000000000000115,1765,657,779,1435,middle 60 percent of longest contiguous run above 0.15 m/s; original values unchanged,raw/speed-0.8.txt,trimmed/speed-0.8-steady.txt
