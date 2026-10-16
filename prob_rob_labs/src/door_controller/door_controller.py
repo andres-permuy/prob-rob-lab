@@ -13,6 +13,14 @@ from door_controller.sequence import PARAMETERS, Sequence
 class DoorController(Node):
     def __init__(self):
         super().__init__('door_controller')
+        self.feature_mean = None
+
+        self.create_subscription(
+            Float64,
+            '/feature_mean',
+            self.feature_mean_callback,
+            10
+        )
         values = {}
         for name, (default, description) in PARAMETERS.items():
             self.declare_parameter(
@@ -51,7 +59,10 @@ class DoorController(Node):
             self.ready = True
 
         try:
-            stage = self.sequence.tick(self.get_clock().now().nanoseconds * 1e-9)
+            stage = self.sequence.tick(now,
+            feature_mean=self.feature_mean
+        )
+
         except ValueError as error:
             self.aborted = True
             self.publish_commands()
@@ -68,6 +79,8 @@ class DoorController(Node):
                     'Timed sequence complete. Verify the robot and door visually; '
                     'this controller has no sensor feedback. Ctrl+C to exit.')
 
+    def feature_mean_callback(self, msg):
+        self.feature_mean = msg.data
 
 def main(args=None):
     rclpy.init(args=args)

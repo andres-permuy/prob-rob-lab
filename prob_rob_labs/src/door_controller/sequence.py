@@ -16,6 +16,7 @@ PARAMETERS = {
     'close_torque': (-5.0, 'Closing torque in N m (negative, at least -5)'),
 }
 
+FEATURE_MEAN_OPEN_THRESHOLD = 287.5
 
 @dataclass(frozen=True)
 class Stage:
@@ -64,6 +65,14 @@ class Sequence:
         self.last_time = now
         if self.started_at is None:
             self.started_at = now
+
+        stage=self.stages[self.index]
+        if stage.name == "OPENING":
+            if (feature_mean>= FEATURE_MEAN_OPEN_THRESHOLD):
+                self.index += 1
+                self.started_at = now
+                return self.stages[self.index]
+            
         if now - self.started_at >= self.stages[self.index].duration:
             self.index += 1
             self.started_at = now
