@@ -1,0 +1,21 @@
+[INFO] [launch]: All log files can be found below /home/hw3214/.ros/log/2026-10-17-00-45-20-218225-botlab31-31623
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [lab3_controller-1]: process started with pid [31627]
+[lab3_controller-1] [INFO] [1792212320.539862536] [lab3_controller]: Started in mode=bayes; feature threshold=319.500; decision probability=0.999900.
+[lab3_controller-1] [INFO] [1792212320.540097508] [lab3_controller]: Measurement model: P(z=open|x=open)=0.988584, P(z=open|x=closed)=0.008065.
+[lab3_controller-1] [INFO] [1792212321.778997357] [lab3_controller]: STATE OPENING; belief_open=0.500000000
+[lab3_controller-1] [INFO] [1792212321.781214648] [lab3_controller]: MEASUREMENT z=closed feature_mean=324.545 prior=0.500000000 posterior=0.011377873
+[lab3_controller-1] [INFO] [1792212322.319888541] [lab3_controller]: MEASUREMENT z=closed feature_mean=323.638 prior=0.011377873 posterior=0.000132435
+[lab3_controller-1] [INFO] [1792212322.854964085] [lab3_controller]: MEASUREMENT z=closed feature_mean=321.770 prior=0.000132435 posterior=0.000001524
+[lab3_controller-1] [INFO] [1792212323.435440573] [lab3_controller]: MEASUREMENT z=closed feature_mean=321.565 prior=0.000001524 posterior=0.000000018
+[lab3_controller-1] [INFO] [1792212324.010592400] [lab3_controller]: MEASUREMENT z=closed feature_mean=322.328 prior=0.000000018 posterior=0.000000000
+[lab3_controller-1] [INFO] [1792212324.634537531] [lab3_controller]: MEASUREMENT z=closed feature_mean=320.385 prior=0.000000000 posterior=0.000000000
+[lab3_controller-1] [INFO] [1792212325.260700968] [lab3_controller]: MEASUREMENT z=open feature_mean=318.311 prior=0.000000000 posterior=0.000000000
+[lab3_controller-1] [INFO] [1792212326.021588500] [lab3_controller]: MEASUREMENT z=open feature_mean=316.995 prior=0.000000000 posterior=0.000000035
+[lab3_controller-1] [INFO] [1792212326.574431180] [lab3_controller]: MEASUREMENT z=open feature_mean=316.378 prior=0.000000035 posterior=0.000004280
+[lab3_controller-1] [INFO] [1792212327.163659037] [lab3_controller]: MEASUREMENT z=open feature_mean=314.031 prior=0.000004280 posterior=0.000524317
+[lab3_controller-1] [INFO] [1792212327.752536041] [lab3_controller]: MEASUREMENT z=open feature_mean=318.154 prior=0.000524317 posterior=0.060417849
+[lab3_controller-1] [INFO] [1792212328.388923919] [lab3_controller]: MEASUREMENT z=open feature_mean=318.479 prior=0.060417849 posterior=0.887413499
+[lab3_controller-1] [INFO] [1792212329.032768881] [lab3_controller]: MEASUREMENT z=open feature_mean=316.067 prior=0.887413499 posterior=0.998966045
+[lab3_controller-1] [INFO] [1792212329.593217083] [lab3_controller]: MEASUREMENT z=open feature_mean=317.126 prior=0.998966045 posterior=0.999991556
+[lab3_controller-1] [INFO] [1792212329.594342828] [lab3_controller]: STATE DRIVING; belief_open=0.999991556

@@ -16,8 +16,13 @@ htmlcov/
 /submission/*.zip
 /submission/*.zip.tmp
 
+# Local source recordings and report backups (never submit or commit)
+/local_archive/
+
 # Editor and OS temporary files
 *.swp
 *~
 *.bak
 .DS_Store
+~$*
+~WRL*.tmp

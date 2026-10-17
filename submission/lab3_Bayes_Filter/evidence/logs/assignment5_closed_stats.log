@@ -1,0 +1,6 @@
+[INFO] [launch]: All log files can be found below /home/hw3214/.ros/log/2026-10-17-00-27-10-241049-botlab31-28034
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [feature_stats-1]: process started with pid [28038]
+[feature_stats-1] [INFO] [1792211230.548091437] [feature_stats]: Collecting 30.0 s with actual_state=closed, threshold=319.500.
+[feature_stats-1] [INFO] [1792211264.152300452] [feature_stats]: LAB3_STATS actual_state=closed total=882 z_open=10 z_closed=872 P(z=open|x=closed)=0.011338 P(z=closed|x=closed)=0.988662 laplace_P(z=open|x=closed)=0.012443 laplace_P(z=closed|x=closed)=0.987557
+[feature_stats-1] [INFO] [1792211264.152483300] [feature_stats]: Window complete; save this output and press Ctrl+C.

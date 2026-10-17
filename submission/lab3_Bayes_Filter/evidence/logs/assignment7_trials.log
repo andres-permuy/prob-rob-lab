@@ -1,0 +1,52 @@
+[INFO] [1792213130.480014137] [assignment7_trials]: ASSIGNMENT7_START trials=25; first ensuring door is closed.
+[INFO] [1792213136.524865005] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=1
+[INFO] [1792213137.574651765] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=1 outcome=failure successes=0 failures=1
+[INFO] [1792213138.624840847] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=2
+[INFO] [1792213139.674710834] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=2 outcome=failure successes=0 failures=2
+[INFO] [1792213140.724766740] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=3
+[INFO] [1792213141.774870124] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=3 outcome=failure successes=0 failures=3
+[INFO] [1792213142.824615554] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=4
+[INFO] [1792213143.824654550] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=4 outcome=failure successes=0 failures=4
+[INFO] [1792213144.874764338] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=5
+[INFO] [1792213144.875318084] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=5 outcome=success successes=1 failures=4
+[INFO] [1792213158.024746953] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=6
+[INFO] [1792213159.074627571] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=6 outcome=failure successes=1 failures=5
+[INFO] [1792213160.124725968] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=7
+[INFO] [1792213161.174644593] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=7 outcome=failure successes=1 failures=6
+[INFO] [1792213162.224735460] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=8
+[INFO] [1792213163.274602685] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=8 outcome=failure successes=1 failures=7
+[INFO] [1792213164.324673915] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=9
+[INFO] [1792213165.374707607] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=9 outcome=failure successes=1 failures=8
+[INFO] [1792213166.424688243] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=10
+[INFO] [1792213167.474697157] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=10 outcome=failure successes=1 failures=9
+[INFO] [1792213168.525047169] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=11
+[INFO] [1792213169.574604893] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=11 outcome=failure successes=1 failures=10
+[INFO] [1792213170.624669937] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=12
+[INFO] [1792213171.674660406] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=12 outcome=failure successes=1 failures=11
+[INFO] [1792213172.724664753] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=13
+[INFO] [1792213173.774605321] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=13 outcome=failure successes=1 failures=12
+[INFO] [1792213174.824686058] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=14
+[INFO] [1792213175.874655694] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=14 outcome=failure successes=1 failures=13
+[INFO] [1792213176.924647462] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=15
+[INFO] [1792213176.925052249] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=15 outcome=success successes=2 failures=13
+[INFO] [1792213190.024717615] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=16
+[INFO] [1792213191.075203111] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=16 outcome=failure successes=2 failures=14
+[INFO] [1792213192.124674696] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=17
+[INFO] [1792213193.174741956] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=17 outcome=failure successes=2 failures=15
+[INFO] [1792213194.224716848] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=18
+[INFO] [1792213195.274613356] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=18 outcome=failure successes=2 failures=16
+[INFO] [1792213196.324859170] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=19
+[INFO] [1792213197.374786608] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=19 outcome=failure successes=2 failures=17
+[INFO] [1792213198.424753835] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=20
+[INFO] [1792213199.474681977] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=20 outcome=failure successes=2 failures=18
+[INFO] [1792213200.524699305] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=21
+[INFO] [1792213201.525976069] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=21 outcome=failure successes=2 failures=19
+[INFO] [1792213202.575282854] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=22
+[INFO] [1792213202.576087532] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=22 outcome=success successes=3 failures=19
+[INFO] [1792213215.625513313] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=23
+[INFO] [1792213216.674651251] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=23 outcome=failure successes=3 failures=20
+[INFO] [1792213217.724753304] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=24
+[INFO] [1792213217.725624586] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=24 outcome=success successes=4 failures=20
+[INFO] [1792213230.874752879] [assignment7_trials]: ASSIGNMENT7_COMMAND trial=25
+[INFO] [1792213231.924721654] [assignment7_trials]: ASSIGNMENT7_TRIAL trial=25 outcome=failure successes=4 failures=21
+[INFO] [1792213231.925132726] [assignment7_trials]: ASSIGNMENT7_SUMMARY total=25 successes=4 failures=21 measured_probability=0.160000 actual_probability_from_code=0.200000

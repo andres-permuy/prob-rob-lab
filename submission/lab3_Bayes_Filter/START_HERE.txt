@@ -1,0 +1,28 @@
+LAB 3: BAYES FILTER — FINAL SUBMISSION
+
+Team
+  Howard Wang (hw3214)
+  Andres Permuy (app2164)
+  Samwel Waweru (swk2139)
+
+Begin with Lab3_Bayes_Filter_Report.docx. The report contains the written
+answers, measured probabilities, Bayesian belief calculations, Assignment 7
+trial results, Assignment 8 prediction/measurement model, and the annotated
+Assignment 5 threshold plot.
+
+Final demonstration videos are in video/:
+  prob_rob_lab3_#3.mp4  — threshold experiment without the fire truck
+  prob_rob_lab3_#5.mp4  — noisy open/closed feature experiment
+  prob_rob_lab3_#6.mp4  — Bayesian measurement inference
+  prob_rob_lab3_#7.mp4  — shortened 25-trial flaky-opener demonstration
+  prob_rob_lab3_#8.mp4  — shortened full Bayes-filter demonstration
+
+Supporting figures and logs are in evidence/. Submitted source files are under
+source/ in the ZIP archive.
+
+Verification performed before packaging:
+  - 24 Lab 3 Bayes-filter and door-sequence tests passed.
+  - The final DOCX archive and embedded media were validated.
+  - All final videos were decoded and checked for valid duration.
+  - Full-length source recordings, Office temporary files, stale logs, and the
+    draft report are intentionally excluded from this submission.
