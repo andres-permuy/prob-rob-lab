@@ -2,9 +2,8 @@
 
 import math
 
-import pytest
-
 from door_controller.sequence import PARAMETERS, Sequence
+import pytest
 
 
 def settings(**changes):
@@ -28,7 +27,8 @@ def test_complete_traversal_and_parameterized_speed():
         (1000.0, 'DONE', 0.0, 0.0),
     ]
     for now, name, speed, torque in expected:
-        stage = sequence.tick(now)
+        feature_mean = 260.0 if now == 111.0 else None
+        stage = sequence.tick(now, feature_mean=feature_mean)
         assert (stage.name, stage.speed, stage.torque) == (name, speed, torque)
 
 
@@ -40,19 +40,20 @@ def test_paused_simulation_does_not_advance():
     assert sequence.tick(3.0).name == 'OPENING'
 
 
-def test_delayed_callback_still_allows_full_opening_time():
+def test_opening_waits_for_open_measurement_without_a_timeout():
     sequence = Sequence(settings())
     sequence.tick(0.0)
     assert sequence.tick(100.0).name == 'OPENING'
     assert sequence.tick(107.9).name == 'OPENING'
-    assert sequence.tick(108.0).name == 'DRIVING'
+    assert sequence.tick(1008.0, feature_mean=312.5).name == 'OPENING'
+    assert sequence.tick(1008.1, feature_mean=262.5).name == 'DRIVING'
 
 
 def test_clock_reset_aborts_instead_of_repeating_motion():
     sequence = Sequence(settings())
     sequence.tick(0.0)
     sequence.tick(3.0)
-    assert sequence.tick(11.0).name == 'DRIVING'
+    assert sequence.tick(11.0, feature_mean=262.5).name == 'DRIVING'
     with pytest.raises(ValueError, match='clock moved backward'):
         sequence.tick(0.0)
     stopped = sequence.tick(1.0)
@@ -62,7 +63,7 @@ def test_clock_reset_aborts_instead_of_repeating_motion():
 @pytest.mark.parametrize('name,value', [
     ('forward_speed', 0.0), ('forward_speed', -0.2),
     ('forward_speed', math.nan), ('forward_speed', math.inf),
-    ('startup_delay', -1.0), ('open_duration', 0.0),
+    ('startup_delay', -1.0), ('feature_threshold', 0.0),
     ('drive_duration', -1.0), ('stop_duration', 0.0),
     ('close_duration', 0.0), ('open_torque', 0.0),
     ('open_torque', 5.1), ('close_torque', 1.0), ('close_torque', -5.1),

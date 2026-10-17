@@ -34,6 +34,8 @@ setup(
     entry_points={
         'console_scripts': [
             'door_controller = door_controller.door_controller:main',
+            'feature_stats = lab3_bayes.feature_stats:main',
+            'lab3_controller = lab3_bayes.controller:main',
             'gz_twist_publisher = gz_twist_publisher.gz_twist_publisher:main',
             'image_mean_feature_x = image_mean_feature_x.image_mean_feature_x:main',
             'flaky_door_opener = flaky_door_opener.flaky_door_opener:main',

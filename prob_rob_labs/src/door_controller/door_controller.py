@@ -1,13 +1,12 @@
-"""Assignments 3 and 4: open the door, traverse it, stop, and close it."""
+"""Lab 3 Assignment 4: traverse only after vision detects an open door."""
 
-import rclpy
+from door_controller.sequence import PARAMETERS, Sequence
 from geometry_msgs.msg import TwistStamped
 from rcl_interfaces.msg import ParameterDescriptor
+import rclpy
 from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 from std_msgs.msg import Float64
-
-from door_controller.sequence import PARAMETERS, Sequence
 
 
 class DoorController(Node):
@@ -59,10 +58,8 @@ class DoorController(Node):
             self.ready = True
 
         try:
-            stage = self.sequence.tick(now,
-            feature_mean=self.feature_mean
-        )
-
+            now = self.get_clock().now().nanoseconds * 1e-9
+            stage = self.sequence.tick(now, feature_mean=self.feature_mean)
         except ValueError as error:
             self.aborted = True
             self.publish_commands()
@@ -76,11 +73,11 @@ class DoorController(Node):
             self.previous_stage = stage.name
             if stage.name == 'DONE':
                 self.get_logger().info(
-                    'Timed sequence complete. Verify the robot and door visually; '
-                    'this controller has no sensor feedback. Ctrl+C to exit.')
+                    'Vision-gated sequence complete. Ctrl+C to exit.')
 
     def feature_mean_callback(self, msg):
         self.feature_mean = msg.data
+
 
 def main(args=None):
     rclpy.init(args=args)
