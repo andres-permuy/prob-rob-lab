@@ -1,0 +1,17 @@
+Ground-truth velocity statistics for nominally-zero velocity command
+Source: zero_cmd_bag.zip
+Topic: /tb3/ground_truth/twist (geometry_msgs/msg/TwistStamped)
+Finite paired samples: 1648
+Standard deviation reported as sample standard deviation (ddof=1).
+
+linear_x (m/s):
+  Mean: -0.0003607611816 m/s
+  Sample standard deviation: 0.004448870478 m/s
+  Population standard deviation: 0.004447520494 m/s
+  Range: [-0.01658156425, 0.01703542772] m/s
+
+angular_z (rad/s):
+  Mean: -0.000139708466 rad/s
+  Sample standard deviation: 0.004391654809 rad/s
+  Population standard deviation: 0.004390322188 rad/s
+  Range: [-0.01724942862, 0.01578232333] rad/s
