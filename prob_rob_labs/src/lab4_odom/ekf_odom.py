@@ -37,7 +37,7 @@ class EkfOdom(Node):
 
         # assignment 5 wheel geometry and measurement model
         r_w = 0.033
-        R = 0.1435 / 2.0
+        R = 0.287 / 2.0  # waffle_pi DiffDrive wheel_separation is 0.287 m
         self.C = np.array([
             [0, 0, 0, 1 / r_w, R / r_w],
             [0, 0, 0, 1 / r_w, -R / r_w],
@@ -45,27 +45,36 @@ class EkfOdom(Node):
         ])
         self.encoder_var = 0.1**2  # Assumed encoder standard deviation: 0.1 rad/s
         self.gyro_var = 0.01**2    # Fallback if the IMU has no valid variance
+        self.cmd_timeout = 1.0  # s, same as the robot's command safety timer
         self.missing_wheels_logged = False
+        self.sync_count = 0
+        self.max_sync_offset = 0.0
 
         self.cmd_sub = self.create_subscription(
             TwistStamped, '/cmd_vel', self.handle_command, 10)
         self.imu_sub = message_filters.Subscriber(self, Imu, '/imu')
         self.joint_sub = message_filters.Subscriber(self, JointState, '/joint_states')
+        # /imu is 200 Hz (5 ms) and /joint_states 500 Hz (2 ms) in sim time,
+        # so every IMU sample has an encoder sample within ~1 ms. 10 ms
+        # tolerates jitter while keeping pairs well inside the 37 ms rise time.
         self.sync = message_filters.ApproximateTimeSynchronizer(
-            [self.imu_sub, self.joint_sub], queue_size=20, slop=0.05)
+            [self.imu_sub, self.joint_sub], queue_size=20, slop=0.01)
         self.sync.registerCallback(self.handle_measurements)
         self.odom_pub = self.create_publisher(Odometry, '/ekf_odom', 10)
 
     def handle_command(self, msg):
-        """Store the commanded body velocities and their reception time.
+        """Store the commanded body velocities and their arrival time.
+
+        The arrival time is the latest processed sensor timestamp, so the
+        timeout is measured in sensor (simulation) time. The command header is
+        not used: it is zero from `ros2 topic pub` and wall-clock time from
+        rqt_robot_steering.
 
         Args:
             msg: Commanded velocity (TwistStamped).
         """
         self.u[:, 0] = [msg.twist.linear.x, msg.twist.angular.z]
-        # CLI commands may have a zero header stamp; receipt uses simulation time
-
-        self.cmd_stamp = self.get_clock().now().nanoseconds * 1e-9
+        self.cmd_stamp = self.last_stamp
 
     def predict(self, dt, u):
         """Predict the state and covariance using Assignments 3 and 4.
@@ -133,23 +142,25 @@ class EkfOdom(Node):
                 self.missing_wheels_logged = True
             return
 
+        right = joints.name.index('wheel_right_joint')
+        left = joints.name.index('wheel_left_joint')
+        if len(joints.velocity) <= max(right, left):
+            return
+
         # Use the later of the two synchronized measurement timestamps
         imu_time = imu.header.stamp.sec + imu.header.stamp.nanosec * 1e-9
         joint_time = joints.header.stamp.sec + joints.header.stamp.nanosec * 1e-9
         stamp = max(imu_time, joint_time)
         if stamp <= 0.0 or (self.last_stamp is not None and stamp <= self.last_stamp):
             return
+        self.log_sync(abs(imu_time - joint_time))
 
-        # Ignore commands older than the simu timeout
+        # Treat commands older than the robot's timeout as zero velocity
         age = None if self.cmd_stamp is None else stamp - self.cmd_stamp
-        u = self.u if age is not None and 0.0 <= age < 1.0 else np.zeros((2, 1))
+        u = self.u if age is not None and age < self.cmd_timeout else np.zeros((2, 1))
         if self.last_stamp is not None:
             self.predict(stamp - self.last_stamp, u)
 
-        right = joints.name.index('wheel_right_joint')
-        left = joints.name.index('wheel_left_joint')
-        if len(joints.velocity) <= max(right, left):
-            return
         z = np.array([[joints.velocity[right]],
                       [joints.velocity[left]],
                       [imu.angular_velocity.z]])
@@ -162,6 +173,18 @@ class EkfOdom(Node):
         self.last_stamp = stamp
         self.publish_odometry(imu.header.stamp if imu_time >= joint_time
                               else joints.header.stamp)
+
+    def log_sync(self, offset):
+        """Log, every 5 s, how many pairs were fused and their worst stamp offset.
+
+        Args:
+            offset: |IMU stamp - encoder stamp| of the current pair in seconds.
+        """
+        self.sync_count += 1
+        self.max_sync_offset = max(self.max_sync_offset, offset)
+        self.get_logger().info(
+            f'{self.sync_count} synchronized pairs, max IMU/encoder offset '
+            f'{self.max_sync_offset * 1e3:.1f} ms', throttle_duration_sec=5.0)
 
     def publish_odometry(self, stamp):
         """Publish the state and covariance in a ROS Odometry message.

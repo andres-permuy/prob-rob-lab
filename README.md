@@ -1,19 +1,17 @@
 # Probabilistic Robotics Labs
 
-## Lab 4: Odometry — In Progress
+## Lab 4: Odometry — Complete
 
-> **Current status (November 1, 2026):** The EKF odometry node has been added to the ROS 2 package, but its behavior in the running Gazebo simulation has **not yet been verified**. The **Lab 4 report is in progress on Overleaf**; the final `.tex` source and PDF have not yet been added to this repository.
+> **Status (November 2, 2026):** All nine assignments are complete. The report, evidence, and video are in [`submission/lab4_Odometry/`](submission/lab4_Odometry/) (start with `START_HERE.txt`).
 
 | Assignment | Status |
 |---|---|
-| **1. Zero-command velocity** | Complete. Ground-truth recording, statistics, and histograms are under [`submission/lab4_Odometry/assignment1/`](submission/lab4_Odometry/assignment1/). |
-| **2. Commanded motion** | Demonstrated using Gazebo, PlotJuggler, and RViz. Videos were shared separately; they are not included in this repository snapshot. |
-| **3. Robot dynamics** | Complete. Staircase-command script, recorded data, and velocity plots are under [`submission/lab4_Odometry/assignment3/`](submission/lab4_Odometry/assignment3/). |
-| **4–5. EKF models** | State-update/Jacobian and measurement-model derivations drafted in the Overleaf report. |
-| **6. EKF odometry node** | Implemented in [`ekf_odom.py`](prob_rob_labs/src/lab4_odom/ekf_odom.py) and registered as `ekf_odom`; live ROS/Gazebo verification is still pending. |
-| **7–9. Evaluation** | Not started. Pose comparison, error analysis, and covariance review remain. |
-
-**Next:** Run and verify `/ekf_odom` with the course simulation, then complete Assignments 7–9 and add the finished Overleaf report to `submission/lab4_Odometry/`.
+| **1. Zero-command velocity** | Bag, analysis script, histograms, and statistics in [`assignment1/`](submission/lab4_Odometry/assignment1/). |
+| **2. Commanded motion** | PlotJuggler/RViz screenshots in [`assignment2/`](submission/lab4_Odometry/assignment2/); videos linked in the report. |
+| **3. Robot dynamics** | Step-command script, bag, and annotated step plots in [`assignment3/`](submission/lab4_Odometry/assignment3/). |
+| **4–5. EKF models** | Motion model, Jacobian, and measurement model (R = 0.1435 m for the simulated Waffle Pi) in the report. |
+| **6. EKF odometry node** | [`ekf_odom.py`](prob_rob_labs/src/lab4_odom/ekf_odom.py), `ros2 run prob_rob_labs ekf_odom`; verified in simulation. |
+| **7–9. Evaluation** | Error node [`ekf_error.py`](prob_rob_labs/src/lab4_odom/ekf_error.py) (`ros2 run prob_rob_labs ekf_error`), drive pattern, evaluation bag, video, and covariance analysis in [`assignment7/`](submission/lab4_Odometry/assignment7/)–[`assignment9/`](submission/lab4_Odometry/assignment9/). |
 
 ---
 
@@ -61,13 +59,13 @@ Launch the Lab 4 empty-world simulation:
 ros2 launch prob_rob_labs turtlebot3_empty_launch.py
 ```
 
-In another terminal, start the **currently unverified** EKF node:
+In another terminal, start the EKF node (and `ekf_error` for evaluation):
 
 ```bash
 ros2 run prob_rob_labs ekf_odom --ros-args -p use_sim_time:=true
 ```
 
-The node is intended to publish `nav_msgs/msg/Odometry` on `/ekf_odom`, using `/cmd_vel`, `/imu`, and `/joint_states` as inputs. Ground truth is available on `/tb3/ground_truth/pose` and `/tb3/ground_truth/twist` for evaluation.
+The node publishes `nav_msgs/msg/Odometry` on `/ekf_odom`, using `/cmd_vel`, `/imu`, and `/joint_states` as inputs. Ground truth is available on `/tb3/ground_truth/pose` and `/tb3/ground_truth/twist` for evaluation.
 
 ## Notes
 

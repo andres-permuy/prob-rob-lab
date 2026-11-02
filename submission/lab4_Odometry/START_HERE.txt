@@ -1,0 +1,35 @@
+LAB 4: ODOMETRY — FINAL SUBMISSION
+
+Team
+  Howard Wang (hw3214)
+  Andres Permuy (app2164)
+  Samwel Waweru (swk2139)
+
+Begin with Lab4_Odometry_Report.pdf. It contains the answers, derivations,
+figures, and the code listings for the EKF node (Appendix A) and the error
+node (Appendix B).
+
+Video (Assignment 7):
+  assignment7/assignment7_ekf_vs_ground_truth.mp4
+    EKF odometry vs. ground truth in RViz with live error plots (76 s).
+  The Assignment 2 videos are linked in the report.
+
+Source code (source/):
+  prob_rob_labs/src/lab4_odom/ekf_odom.py   EKF odometry node (Assignment 6)
+  prob_rob_labs/src/lab4_odom/ekf_error.py  error node (Assignment 8)
+  prob_rob_labs/setup.py, package.xml       entry points and dependencies
+  Run with: ros2 run prob_rob_labs ekf_odom / ros2 run prob_rob_labs ekf_error
+
+Evidence by assignment:
+  assignment1/  zero-command bag, analysis script, histograms, statistics
+  assignment2/  PlotJuggler and RViz screenshots
+  assignment3/  step-command publisher, bag, staircase plots, step close-up
+  assignment7/  drive pattern used for the evaluation run, RViz screenshot,
+                video
+  assignment8/  error plot (PlotJuggler)
+  assignment9/  evaluation-run bag (data/eval_run.zip), analysis script,
+                covariance plot
+
+The analysis scripts read the zipped bags directly. assignment1 needs only
+NumPy and Matplotlib; the others need ROS 2 Jazzy sourced, e.g.
+  python3 assignment9/analyze_eval_run.py

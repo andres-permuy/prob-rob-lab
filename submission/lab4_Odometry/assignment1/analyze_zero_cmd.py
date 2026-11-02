@@ -8,8 +8,9 @@ NumPy, and Matplotlib are required; ROS 2 is not required.
 Run from any directory:
     python analyze_zero_cmd.py
 
-Outputs histogram plots, a CSV of the statistics, and a text report next to
-this script. Standard deviations are sample standard deviations (ddof=1).
+Reads data/zero_cmd_bag.zip and writes histogram plots, a CSV of the
+statistics, and a text report into data/. Standard deviations are sample
+standard deviations (ddof=1).
 """
 
 from __future__ import annotations
@@ -26,7 +27,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-EVIDENCE_DIR = Path(__file__).resolve().parent
+EVIDENCE_DIR = Path(__file__).resolve().parent / "data"
 BAG_ZIP = EVIDENCE_DIR / "zero_cmd_bag.zip"
 MCAP_MEMBER = "zero_cmd_bag/zero_cmd_bag_0.mcap"
 TOPIC = "/tb3/ground_truth/twist"
