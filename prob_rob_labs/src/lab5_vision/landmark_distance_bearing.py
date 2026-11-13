@@ -18,11 +18,10 @@ class LandmarkDistanceBearing(Node):
 
     Vector3Stamped encodes scalar values, not a Cartesian vector:
     vector.x = distance, vector.y = bearing, and vector.z = 0 (unused).
-    Its header preserves the source image's timestamp and camera frame.
+    Header preserves the source image's timestamp and camera frame.
     """
 
     def __init__(self):
-        """Initialize startup parameters, subscriptions, and the publisher."""
         super().__init__('landmark_distance_bearing')
         self.log = self.get_logger()
 
@@ -33,7 +32,7 @@ class LandmarkDistanceBearing(Node):
         self.edge_margin_px = self.declare_parameter(
             'edge_margin_px', 5.0).value
 
-        # Parameters are read at startup; reject invalid configurations.
+        # Parameters are read at startup, reject invalid configurations.
         if (not math.isfinite(self.landmark_height)
                 or self.landmark_height <= 0.0):
             raise ValueError('landmark_height must be finite and positive.')
@@ -57,7 +56,6 @@ class LandmarkDistanceBearing(Node):
             f'publishing distance/bearing on {topic_prefix}/measurement.')
 
     def spin(self):
-        """Process ROS callbacks using the professor's node-template pattern."""
         rclpy.spin(self)
 
     def handle_camera_info(self, msg):
@@ -108,13 +106,12 @@ class LandmarkDistanceBearing(Node):
         if not 0.75 * expected_ratio <= shape_ratio <= 1.5 * expected_ratio:
             return
 
-        # Lab 5 handout, pp. 4-5: pixel-right gives negative bearing.
         theta = math.atan((cx - x_p) / fx)
         d = self.landmark_height * fy / (delta_y_p * math.cos(theta))
         if not math.isfinite(d) or d <= 0.0:
             return
 
-        # Publish only a fresh valid detection; preserve its acquisition time.
+        # Publish only a fresh valid detection, preserve its acquisition time.
         measurement = Vector3Stamped()
         measurement.header = msg.header
         measurement.vector.x = d
@@ -124,7 +121,6 @@ class LandmarkDistanceBearing(Node):
 
 
 def main():
-    """Initialize, spin, and shut down as in the professor's node template."""
     rclpy.init()
     landmark_distance_bearing = LandmarkDistanceBearing()
     landmark_distance_bearing.spin()
