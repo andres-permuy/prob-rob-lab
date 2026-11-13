@@ -44,6 +44,7 @@ setup(
             'gz_pose_publisher = gz_pose_publisher.gz_pose_publisher:main',
             'cmd_vel_noise_injector = cmd_vel_noise_injector.cmd_vel_noise_injector:main',
             'landmark_distance_bearing = lab5_vision.landmark_distance_bearing:main',
+            'landmark_measurement_error = lab5_vision.landmark_measurement_error:main',
         ],
     }
 )
