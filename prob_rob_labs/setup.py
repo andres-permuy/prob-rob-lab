@@ -43,6 +43,7 @@ setup(
             'flaky_door_opener = flaky_door_opener.flaky_door_opener:main',
             'gz_pose_publisher = gz_pose_publisher.gz_pose_publisher:main',
             'cmd_vel_noise_injector = cmd_vel_noise_injector.cmd_vel_noise_injector:main',
+            'landmark_distance_bearing = lab5_vision.landmark_distance_bearing:main',
         ],
     }
 )
